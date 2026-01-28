@@ -34,7 +34,7 @@ print("=== Mengambil baris menjadi kolom data ===")
 with open("mahasiswa.txt", "r", encoding="utf-8") as file:
     for baris in file:
         baris = baris.strip()
-        nim, nama, nilai = baris.split(",")
+        nim, nama, nilai = baris.split(",") #Simpan sebagai NIM, nilai dan Nama
         print("NIM:", nim, "| Nama:", nama, "| Nilai:", nilai)
 
 #====================================================
@@ -47,7 +47,7 @@ data_list = [] #Untuk menampung data mahasiswa
 with open("mahasiswa.txt", "r", encoding="utf-8") as file:
     for baris in file:
         baris = baris.strip()
-
+        nim, nama, nilai = baris.split(",") #Simpan sebagai NIM, nilai dan Nama
         # Simpan sebagai list "[nim, nama, nilai]"
         data_list.append([nim, nama, int(nilai)])
 
@@ -62,3 +62,23 @@ print("Jumlah Record", len(data_list))
 print(" ")
 print(" ==== Menampilkan Data Record Tertentu ====")
 print("Contoh Record pertama: ", data_list[0])
+
+#====================================================
+#  Praktikum 1 : Konsep ADT dan File Handling
+# Latihan Dasar 4 : Membaca File dan Menyimpan ke Dictionary
+#====================================================
+
+data_dict = {}
+with open("mahasiswa.txt", "r", encoding="utf-8") as file:
+    for baris in file:
+        baris = baris.strip()
+        nim, nama, nilai = baris.split(",")
+
+        # Simpan data mahasiswa ke dictionary dengan key NIM
+        data_dict[nim] = {  #Key
+            "nama" : nama,          #Values
+            "nilai" : int(nilai)    #Values
+        }
+print(" ")
+print("==== Data Mahasiswa dalam Dictionary ====")
+print(data_dict)
