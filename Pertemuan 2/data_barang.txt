@@ -1,0 +1,15 @@
+BRG001, Roti, 1
+BRG002, Susu, 15
+BRG003, Gula, 30
+BRG004, Teh Celup, 25
+BRG005, Kopi Bubuk, 18
+BRG006, Mie Instan, 50
+BRG007, Minyak Goreng, 22
+BRG008, Beras, 40
+BRG009, Telur Ayam, 35
+BRG010, Keju, 12
+BRG011, Mentega, 14
+BRG012, Air Mineral, 60
+BRG013, Kecap Manis, 20
+BRG014, Saos Sambal, 17
+BRG015, Tepung Terigu, 28
