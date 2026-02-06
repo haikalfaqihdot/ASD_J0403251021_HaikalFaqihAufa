@@ -1,71 +1,85 @@
 #====================================================
-#  Tugas 1 
-# Pembuatan program pengelolaan data barang
+# TUGAS HANDS-ON MODUL 1
+# Studi Kasus: Sistem Stok Barang Kantin (Berbasis File .txt)
+#  
+# Nama  : Haikal Faqih Aufa
+# NIM   : J0403251021
+# Kelas : TPL-B1
 #====================================================
 
-# Membuat variabel untuk nama file agar tidak menulis nama file berulang-ulang
+#====================================================
+# Konstanta nama file
+#====================================================
 nama_file = "data_barang.txt"
 
 #====================================================
-#  Inisialisasi pembuatan fungsi read_data_barang
-#  Fungsi ini digunakan untuk mengambil data barang yang berada di file data_barang.txt
+#  Fungsi: Mambaca data dari file
 #====================================================
-def read_data_barang(nama_file):
-    data_dict = {} #inisialisasi data dictionary
+def baca_stok(nama_file):
+    stok_dict = {} #inisialisasi data dictionary
     with open(nama_file, "r", encoding="utf-8") as file:
         # Mengambil atau membuka data barang per baris
         for baris in file:
             baris = baris.strip()
             kode, nama, stok = baris.split(",")
             # Menyimpan data barang ke dictionary dengan key kode
-            data_dict[kode] = {  #Key
+            stok_dict[kode] = {  #Key
                 "nama" : nama,          #Values
                 "stok" : int(stok)    #Values
             }
-    return data_dict
+    return stok_dict
 
-#====================================================
-#  Inisialisasi pembuatan fungsi show_data
-#  Fungsi ini digunakan untuk menampilkan data barang yang berada di file data_barang.txt
-#====================================================
-def show_data(data_dict):
+#=================================
+#  Fungsi: Menyimpan data ke file
+#==================================
+def simpan_stok(nama_file, stok_dict):
+    # Membuka file txt dalam mode w atau write yaitu menulis ulang
+    with open(nama_file, "w", encoding="utf-8") as file:
+        for kode in sorted(stok_dict.keys()):
+            nama = stok_dict[kode]["nama"]
+            stok = stok_dict[kode]["stok"]
+            file.write(f"{kode},{nama},{stok}\n")
+
+#=================================
+#  Fungsi: Menampilkan semua data
+#==================================
+def tampilkan_semua(stok_dict):
     # Error handler untuk jika data kosong akan mengembalikan nilai "Data Kosong"
-    if len(data_dict) == 0:
+    if len(stok_dict) == 0:
         print("Data Kosong")
         return
     
     # Membuat Struktur Header Tabel
     print("\n============= Daftar Barang =============")
-    print(f"{'Kode Barang': <10} | {'Nama Barang' : <15} | {'Stok': >5}")
+    print(f"{'Kode': <10} | {'Nama' : <15} | {'Stok': >5}")
     print("-" * 40) #Menampilkan garis untuk header sebanyak 40 strip
     
     '''
     Untuk Tampilan yang rapi, atur f-string formating
-        {'Kode Barang': <10} artinya:
+        {'Kode': <10} artinya:
         tampikan kode barang <= rata kiri dengan lebar 10 karakter
-        {'Nama Barang': <15}
+        {'Nama': <15}
         tampilkan nama rata kiri, dengan lebar kolom 15 karakter
         {'Stok':>5}
         tampilkan stok >= rata kanan, lebar kolom 5 karakter   
     '''
     # Menampilkan data barang dengan metode perulangan yaitu per baris
-    for kode in sorted(data_dict.keys()):
-        nama=data_dict[kode]["nama"]
-        stok=data_dict[kode]["stok"]
+    for kode in sorted(stok_dict.keys()):
+        nama=stok_dict[kode]["nama"]
+        stok=stok_dict[kode]["stok"]
         print(f"{kode: <10} | {nama: <15} | {stok: >5}")
 
-#====================================================
-#  Inisialisasi pembuatan fungsi search_data
-#  Fungsi ini digunakan untuk mencari data barang berdasarkan kode barang
-#====================================================
-def search_data(data_dict):
+#========================================
+#  Fungsi: Cari barang berdasarkan kode
+#=======================================
+def cari_barang(stok_dict):
     # Mencari data barang berdasarkan kode barang
     kode_cari = input("Masukan kode barang yang ingin dicari: ").strip()
 
     # Menyatakan kondisi apabila data barang di temukan dan tidak
-    if kode_cari in data_dict:
-        nama = data_dict[kode_cari]["nama"]
-        stok = data_dict[kode_cari]["stok"]
+    if kode_cari in stok_dict:
+        nama = stok_dict[kode_cari]["nama"]
+        stok = stok_dict[kode_cari]["stok"]
 
         print("\n==== Data Barang Ditemukan ====")
         print(f"kode barang     : {kode_cari}")
@@ -75,50 +89,21 @@ def search_data(data_dict):
     else:
         print("\nData barang tidak ditemukan")
 
-#====================================================
-#  Inisialisasi pembuatan fungsi update_stok
-#  Fungsi ini digunakan untuk mengubah data stok 
-#====================================================
-def update_stok(data_dict):
-    # Cari kode barang yang akan diupdate nilainya
-    kode = input("Masukan kode barang mahasiswa yang akan diupdate stoknya ").strip()
-
-    # Menyatakan kondisi apabila kode barang yang diinput tersedia atau tidak
-    if kode not in data_dict:
-        print("Kode barang tidak ditemukan, update dibatalkan")
-        return
-    try:
-        stok_baru = int(input("Masukan stok baru (0-1000): ").strip())
-    except ValueError:
-        print("Stok harus berupa angka. Update dibatalkan")
-        return
-    
-    # Menyatakan kondisi apabila input yang di masukan sesuai dengan yang sudah ditentukan atau tidak
-    if stok_baru < 0 or stok_baru > 1000:
-        print("Stok harus antara 0 sampai 100. update dibatalkan")
-    else:
-        stok_lama = data_dict[kode]["stok"]
-        # Memasukan stok update baru ke dictionary
-        data_dict[kode]["stok"] = stok_baru
-
-        print(f"Update Berhasil. Stok {kode} berubah dari {stok_lama} menjadi {stok_baru}")
-
-#====================================================
-#  Inisialisasi pembuatan fungsi insert_data
-#  Fungsi ini digunakan untuk menambah data baru ke dalam file .txt
-#====================================================
-def insert_data(data_dict):
+#==============================
+#  Fungsi: Tambah barang baru
+#===============================
+def tambah_barang(stok_dict):
     # Input untuk kode barang
     kode = input("Masukan kode barang baru: ").strip()
     # Cek apakah kode barang sudah digunakan atau belum
-    if kode in data_dict:
+    if kode in stok_dict:
         print("Kode barang sudah tersedia, tambah data dibatalkan")
         return
     # JIka kondisi di atas terpenuhi dapat mengisi nama barang
     nama = input("Masukan nama barang: ").strip()
     # Mengecek apakah stok yang dimasukan berupa angka atau tidak
     try:
-        stok = int(input("Masukan stok barang (0-1000): ").strip())
+        stok = int(input("Masukan stok awal barang (0-1000): ").strip())
     except ValueError:
         print("Stok harus berupa angka. Tambah data dibatalkan")
         return
@@ -128,54 +113,93 @@ def insert_data(data_dict):
         print("Stok harus antara 0 sampai 1000. Tambah data dibatalkan")
         return
     # Menambahkan data ke dictionary
-    data_dict[kode] = {
+    stok_dict[kode] = {
         "nama": nama,
         "stok": stok
     }
 
     print(f"Data barang {kode} berhasil ditambahkan")
+  
+#==============================
+#  Fungsi: Update stok barang
+#==============================
+def update_stok(stok_dict):
+    # Cari kode barang yang akan diupdate nilainya
+    kode = input("Masukan kode barang yang akan diupdate stoknya ").strip()
 
-#====================================================
-#  Inisialisasi pembuatan fungsi save_data
-#  Fungsi ini digunakan untuk menyimpan data yang sudah diubah sebelumnya ke dalam file .txt
-#====================================================
-def save_data(nama_file, data_dict):
-    # Membuka file txt dalam mode w atau write yaitu menulis ulang
-    with open(nama_file, "w", encoding="utf-8") as file:
-        for kode in sorted(data_dict.keys()):
-            nama = data_dict[kode]["nama"]
-            stok = data_dict[kode]["stok"]
-            file.write(f"{kode},{nama},{stok}\n")
+    # Menyatakan kondisi apabila kode barang yang diinput tersedia atau tidak
+    if kode not in stok_dict:
+        print("Kode barang tidak ditemukan, update dibatalkan")
+        return
+    
+    # Menampilkan suatu pilihan tindakan yang akan di lakukan
+    print("Pilih jenis update:")
+    print("1. Tambah stok")
+    print("2. Kurangi stok")
+    pilihan = input("Masukkan pilihan (1/2): ").strip()
+    
+    try:
+        jumlah = int(input("Masukan jumlah: ").strip())
+    except ValueError:
+        print("Stok harus berupa angka. Update dibatalkan")
+        return
+    
+    if jumlah < 0:
+        print("Jumlah tidak boleh negatif. Update dibatalkan")
+        return
 
+    stok_lama = stok_dict[kode]["stok"]
+
+    if pilihan == "1":
+        stok_baru = stok_lama + jumlah
+
+    elif pilihan == "2":
+        stok_baru = stok_lama - jumlah
+        if stok_baru < 0:
+            print("Stok tidak boleh 0 atau negatif. Update dibatalkan")
+            return
+    else:
+        print("Pilihan tidak valid. Update dibatalkan")
+        return
+
+    # Simpan stok baru ke dalam dictionary
+    stok_dict[kode]["stok"] = stok_baru
+    print(f"Update berhasil. Stok {kode} berubah dari {stok_lama} menjadi {stok_baru}")
+  
 #====================================================
-#  Inisialisasi pembuatan fungsi maini
-#  Fungsi ini digunakan untuk menampilkan menu utama untuk tampilan awal pada saat program dimulai
+#  Program Utama
 #====================================================
 def main():
-    # Menjalankan 
-    open_data = read_data_barang(nama_file)
+    # Membaca data dari file saat program mulai
+    stok_barang = baca_stok(nama_file)
     while True:
-        print("\n=== MENU DATA BARANG ===")
-        print("1. Tampilkan semua data")
-        print("2. Cari data berdasarkan kode barang")
-        print("3. Tambah data barang")
+        print("\n=== MENU STOK KANTIN ===")
+        print("1. Tampilkan semua barang")
+        print("2. Cari barang berdasarkan kode")
+        print("3. Tambah barang baru")
         print("4. Update stok barang")
-        print("5. Simpan data ke file")
+        print("5. Simpan ke file")
         print("0. Keluar")
 
         pilihan = input("Piliha menu: ").strip()
 
+        # Kondisi untuk menentukan pilihan yang di pilih user
         if pilihan == "1":
-            show_data(open_data)
+            tampilkan_semua(stok_barang)
+
         elif pilihan == "2":
-            search_data(open_data) 
+            cari_barang(stok_barang) 
+
         elif pilihan == "3":
-            insert_data(open_data) 
+            tambah_barang(stok_barang) 
+
         elif pilihan == "4":
-            update_stok(open_data) 
+            update_stok(stok_barang) 
+
         elif pilihan == "5":
-            save_data(nama_file, open_data)
+            simpan_stok(nama_file, stok_barang)
             print("Data berhasil disimpan") 
+
         elif pilihan == "0":
             print("Program Selesai")
             break
