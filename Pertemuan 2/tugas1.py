@@ -125,7 +125,7 @@ def tambah_barang(stok_dict):
 #==============================
 def update_stok(stok_dict):
     # Cari kode barang yang akan diupdate nilainya
-    kode = input("Masukan kode barang yang akan diupdate stoknya ").strip()
+    kode = input("Masukan kode barang yang akan diupdate stoknya: ").strip()
 
     # Menyatakan kondisi apabila kode barang yang diinput tersedia atau tidak
     if kode not in stok_dict:
