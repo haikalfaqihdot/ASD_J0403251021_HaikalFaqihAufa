@@ -24,7 +24,7 @@ def insertion_sort(data):
     return data
 
 nilai = [7,8,5,2,4,6]
-print("Hasil Sorting", insertion_sort(nilai))
+print("Hasil Sorting ", insertion_sort(nilai))
 
 
 # ==========================================================

@@ -29,7 +29,7 @@ def merge_sort(data):
 # Jawaban Latihan 4
 # ==========================================================
 '''
-SOAL:
+SOAL :
 1. Apa yang dimaksud dengan base case?
 2. Mengapa fungsi memanggil dirinya sendiri?
 3. Apa tujuan fungsi merge()?

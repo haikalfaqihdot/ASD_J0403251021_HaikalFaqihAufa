@@ -37,7 +37,7 @@ def insertion_sort(data):
 
 
 nilai = [5,2,4,6,1,3]
-print("Hasil Sorting:", insertion_sort(nilai))
+print("Hasil Sorting: ", insertion_sort(nilai))
 
 # ==========================================================
 # Jawaban Latihan 3
