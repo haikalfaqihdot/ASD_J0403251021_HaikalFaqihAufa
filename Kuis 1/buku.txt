@@ -1,0 +1,9 @@
+BK101,Harry Potter,15000
+BK102,Cara Memasak Nasi,12000
+BK103,Tata Cara Sholat,18000
+BK106,Asmaul Husna,13000
+BK111,Petir,11000
+BK112,Angin,11500
+BK113,Pulang,19000
+BK114,Hujan,17500
+BK115,Bulan,16500
